@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Referer.AltonRose.dev</title>
+  </head>
+  <body>
+    <h1 id="text"></h1>
+    <script>
+      const text = document.getElementById("text");
+      const searchParams = new URLSearchParams(window.location.search);
+      const url = new URL(searchParams.get("url"));
+      if (url) {
+        text.innerText = `redirecting to ${url.toString()}, please wait`;
+        setTimeout(() => {
+          window.location.replace(url.toString());
+        }, 1000);
+      } else {
+        text.innerText = "no url provided in query string";
+      }
+    </script>
+  </body>
+</html>
