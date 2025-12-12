@@ -11,17 +11,28 @@
   <body>
     <h1 id="text"></h1>
     <script>
-      const text = document.getElementById("text");
-      const searchParams = new URLSearchParams(window.location.search);
-      const url = new URL(searchParams.get("url"));
-      if (url) {
-        text.innerText = `redirecting to ${url.toString()}, please wait`;
-        setTimeout(() => {
-          window.location.replace(url.toString());
-        }, 1000);
-      } else {
-        text.innerText = "no url provided in query string. please add ?url={your url here} to the url";
-      }
-    </script>
+  const text = document.getElementById("text");
+  const searchParams = new URLSearchParams(window.location.search);
+
+  const raw = searchParams.get("url");
+
+  if (!raw) {
+    text.innerText = "No url provided in query string. Please add ?url={your url here}";
+  } else {
+    let url;
+    try {
+      url = new URL(raw, window.location.href);
+      text.innerText = `Redirecting to ${url.toString()}, please wait...`;
+
+      setTimeout(() => {
+        window.location.replace(url.toString());
+      }, 1000);
+
+    } catch (e) {
+      text.innerText = `Invalid URL provided: ${raw}`;
+    }
+  }
+</script>
+
   </body>
 </html>
